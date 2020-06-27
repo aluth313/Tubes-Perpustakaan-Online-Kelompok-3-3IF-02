@@ -1,0 +1,87 @@
+<%- include ('../../../../partials/admin/header') -%>
+
+<title>Home</title>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <div class="container">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Master Ebook</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item active">Ebook</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <div class="card">
+        <div class="card-header">
+            <!-- <h3 class="card-title">DataTable with default features</h3> -->
+            <a href="/admin/ebook/tambah" class="btn btn-success float-sm-right">Tambah Data</a>
+        </div>
+        <%   
+        let no = 1;
+        %>
+        <!-- /.card-header -->
+        <!-- <div class="container">
+            <div class="col-sm-12">
+            </div>
+        </div> -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Judul</th>
+                        <th>Penerbit</th>
+                        <th>Pengarang</th>
+                        <th>Tahun</th>
+                        <th>Link File</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(data) { %>
+                    <% data.forEach((datagt) => { %>
+                    <tr>
+                        <td> <%= no++ %> </td>
+                        <td> <%= datagt.judul %> </td>
+                        <td> <%= datagt.penerbit %> </td>
+                        <td> <%= datagt.pengarang %> </td>
+                        <td> <%= datagt.tahun %> </td>
+                        <td> <%= datagt.linkFile %> </td>
+                        <td>
+                            <a href="/admin/ebook/destroy/<%= datagt.id %>" class="btn btn-default" onclick="confirm('Anda yakin untuk menghapusnya?')">Hapus</a>
+                            <a href="/admin/ebook/<%= datagt.id %>" class="btn btn-default">Edit</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+                    <% } %>
+                </tbody>
+
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.content -->
+</div>
+</div>
+<!-- /.content-wrapper -->
+<!-- import data footer -->
+
+<%- include ('../../../../partials/admin/footer') -%>
+<script type="text/javascript">
+    $(document).ready(function() {
+        
+    })
+</script>
+</body>
+</html>

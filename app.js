@@ -19,6 +19,8 @@ const detailRoutes = require('./routes/detail');
 const Buku = require('./models/buku');
 const Peminjaman = require('./models/peminjaman');
 const Pengguna = require('./models/pengguna');
+const Ebook = require('./models/ebook');
+const ebookRoutes = require('./routes/ebook');
 
 app.get("/", function (request, response) {
 	response.render('sites/index');
@@ -45,6 +47,7 @@ app.use('/admin', bukuRoutes);
 app.use('/admin', peminjamanRoutes);
 app.use('/admin', penggunaRoutes);
 app.use('/admin', detailRoutes);
+app.use('/admin', ebookRoutes);
 
 
 
