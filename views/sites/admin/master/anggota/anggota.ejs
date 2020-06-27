@@ -4,6 +4,7 @@
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+    <div class="container">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
@@ -13,8 +14,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
+                        <li class="breadcrumb-item active">Anggota</li>
                     </ol>
                 </div>
             </div>
@@ -24,12 +24,17 @@
     <!-- Main content -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+            <!-- <h3 class="card-title">DataTable with default features</h3> -->
+            <a href="/admin/anggota/tambah" class="btn btn-success float-sm-right">Tambah Data</a>
         </div>
         <%   
-  let no = 1;
-   %>
+        let no = 1;
+        %>
         <!-- /.card-header -->
+        <!-- <div class="container">
+            <div class="col-sm-12">
+            </div>
+        </div> -->
         <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -38,11 +43,8 @@
                         <th>nip</th>
                         <th>nik</th>
                         <th>Email</th>
-                        <th>Alamat</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Bandung</th>
-                        <th>Kota Lahir</th>
-                        <th>Tanggal Lahir</th>
+                        <th>Nama</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,10 +56,10 @@
                         <td> <%= datagt.nik %> </td>
                         <td> <%= datagt.email %> </td>
                         <td> <%= datagt.nama %> </td>
-                        <td> <%= datagt.alamat %> </td>
-                        <td> <%= datagt.jenis_kelamin %> </td>
-                        <td> <%= datagt.kota_lahir %> </td>
-                        <td> <%= datagt.tanggal_lahir %> </td>
+                        <td>
+                            <a href="/admin/anggota/destroy/<%= datagt.id %>" class="btn btn-default" onclick="confirm('Anda yakin untuk menghapusnya?')">Hapus</a>
+                            <a href="/admin/anggota/<%= datagt.id %>" class="btn btn-default">Edit</a>
+                        </td>
                     </tr>
                     <% }) %>
                     <% } %>
@@ -69,7 +71,15 @@
     </div>
     <!-- /.content -->
 </div>
+</div>
 <!-- /.content-wrapper -->
 <!-- import data footer -->
 
 <%- include ('../../../../partials/admin/footer') -%>
+<script type="text/javascript">
+    $(document).ready(function() {
+        
+    })
+</script>
+</body>
+</html>
