@@ -13,8 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
+                        <li class="breadcrumb-item active">Buku</li>
                     </ol>
                 </div>
             </div>
@@ -24,7 +23,8 @@
     <!-- Main content -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+            <!-- <h3 class="card-title">DataTable with default features</h3> -->
+            <a href="/admin/buku/tambah" class="btn btn-success float-sm-right">Tambah Data</a>
         </div>
         <%   
   let no = 1;
@@ -40,6 +40,7 @@
                         <th>Pengarang</th>
                         <th>Tahun</th>
                         <th>ISBN</th>
+                        <th>Actions</th>
 
                     </tr>
                 </thead>
@@ -53,6 +54,11 @@
                         <td> <%= datbuk.pengarang %> </td>
                         <td> <%= datbuk.tahun %> </td>
                         <td> <%= datbuk.isbn %> </td>
+                        <td>
+                            <a href="/admin/buku/destroy/<%= datbuk.id %>" class="btn btn-default"
+                                onclick="confirm('Anda yakin untuk menghapusnya?')">Hapus</a>
+                            <a href="/admin/buku/<%= datbuk.id %>" class="btn btn-default">Edit</a>
+                        </td>
 
                     </tr>
                     <% }) %>
@@ -69,3 +75,11 @@
 <!-- import data footer -->
 
 <%- include ('../../../../partials/admin/footer') -%>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    })
+</script>
+</body>
+
+</html>

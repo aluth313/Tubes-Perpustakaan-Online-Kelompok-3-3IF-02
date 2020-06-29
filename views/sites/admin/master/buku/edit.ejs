@@ -1,0 +1,79 @@
+<%- include ('../../../../partials/admin/header') -%>
+
+<title>Home</title>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Edit Buku</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/admin/buku">Buku</a></li>
+                        <li class="breadcrumb-item active">Edit</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <div class="card-body">
+        <form role="form" action="/admin/buku/update/<%= data.id %>" method="POST">
+            <div class="row">
+                <div class="col-sm-7">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Judul</label>
+                        <input type="text" class="form-control" name="judulBuku" value="<%= data.judul %>">
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>penerbit</label>
+                        <input type="text" class="form-control" name="nikPenerbit" value="<%= data.penerbit %>">
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Pengarang</label>
+                        <input type="text" class="form-control" name="pengarangBuku" value="<%= data.pengarang %>">
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Tahun</label>
+                        <input type="text" class="form-control" name="tahunBuku" value="<%= data.tahun %>">
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>ISBN</label>
+                        <input type="text" class="form-control" name="isbnBuku" value="<%= data.isbn %>">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-7">
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!-- import data footer -->
+
+<%- include ('../../../../partials/admin/footer') -%>
