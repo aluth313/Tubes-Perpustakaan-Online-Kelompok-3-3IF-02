@@ -26,6 +26,14 @@ app.get("/", function (request, response) {
 	response.render('sites/index');
 });
 
+app.get("/login", function (request, response) {
+	response.render('sites/login');
+});
+
+app.get("/daftar", function (request, response) {
+	response.render('sites/register');
+});
+
 
 app.get('/admin/dashboard', function (req, res) {
 	var buku = 20;
