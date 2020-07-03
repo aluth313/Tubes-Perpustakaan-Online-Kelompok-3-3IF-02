@@ -1,120 +1,170 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
+const session = require('express-session');
 const Anggota = models.Anggota;
 const User = models.User;
 
 //create
 router.get('/anggota/tambah', (req, res) => {
-    res.render('sites/admin/master/anggota/tambah', { data: null });
+    if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        res.render('sites/admin/master/anggota/tambah', { data: null });
+    }else {
+        res.redirect('/login')
+    }
 });
 
 //store
 router.post('/anggota/tambah', (req, res) => {
-    let user_id;
-    let createUser = User.create({
-        email: req.body.emailAnggota,
-        password: '12345678',
-        role: req.body.role
-    })
-    .then((user) => {
-        let data = {
+    if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        let createUser = User.create({
+            email: req.body.emailAnggota,
+            password: '12345678',
+            role: req.body.role
+        })
+        .then((user) => {
+            let data = {
+                nik: req.body.nikAnggota,
+                nama: req.body.namaAnggota,
+                alamat: req.body.alamatAnggota,
+                jk: req.body.jkAnggota,
+                kota_lahir: req.body.klAnggota,
+                tgl_lahir: req.body.tlAnggota,
+                userId: user.id
+            };
+
+            Anggota
+            .create(data);
+
+            res.redirect('/admin/anggota');
+        })
+    } else {
+        res.redirect('/login')
+    }
+});
+
+//update
+router.post('/anggota/update/:id', (req, res) => {
+    if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        Anggota.findByPk(req.params.id)
+        .then((anggotaId) => {
+            User.update({
+                email: req.body.emailAnggota,
+                role: req.body.role
+            }, {
+                where: {
+                    id: anggotaId.userId
+                }
+            });
+        });
+
+        Anggota
+        .update({
             nik: req.body.nikAnggota,
             nama: req.body.namaAnggota,
             alamat: req.body.alamatAnggota,
             jk: req.body.jkAnggota,
             kota_lahir: req.body.klAnggota,
-            tgl_lahir: req.body.tlAnggota,
-            userId: user.id
-        };
-
-        Anggota
-        .create(data);
-
-        res.redirect('/admin/anggota');
-    })
-});
-
-//update
-router.post('/anggota/update/:id', (req, res) => {
-    Anggota.findByPk(req.params.id)
-    .then((anggotaId) => {
-        User.update({
-            email: req.body.emailAnggota,
-            role: req.body.role
+            tgl_lahir: req.body.tlAnggota
         }, {
             where: {
-                id: anggotaId.userId
+                id: req.params.id
             }
-        });
-    });
+        })
+        .then((anggota) => {
+            res.redirect('/admin/anggota');
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    } else {
+        res.redirect('/login')
+    }
+});
 
-    Anggota
-    .update({
-        nik: req.body.nikAnggota,
-        nama: req.body.namaAnggota,
-        alamat: req.body.alamatAnggota,
-        jk: req.body.jkAnggota,
-        kota_lahir: req.body.klAnggota,
-        tgl_lahir: req.body.tlAnggota
-    }, {
-        where: {
-            id: req.params.id
-        }
-    })
-    .then((anggota) => {
-        res.redirect('/admin/anggota');
-    })
-    .catch((error) => {
-        console.log(error);
-    })
+
+//verifikasi
+router.post('/anggota/update-status/:id', (req, res) => {
+    if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        Anggota
+        .update({
+            status: 1,
+        }, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then((anggota) => {
+            res.redirect('/admin/anggota');
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    } else {
+        res.redirect('/login')
+    }
 });
 
 //index
-router.get('/anggota', (req, res) => {
-    Anggota
-    .findAll()
-    .then((anggota) => {
-        let data = anggota;
-        res.render('sites/admin/master/anggota/anggota', { data: data });
-    })
-    .catch((error) => {
-        console.log(error);
-    })
+router.get('/anggota', async(req, res) => {
+    if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        const anggota = await Anggota.findAll({
+            where: {
+                status: 1
+            }
+        });
+
+        const anggotaBelumVerifikasi = await Anggota.findAll({
+            where: {
+                status: 0
+            }
+        });
+        res.render('sites/admin/master/anggota/anggota', { data: anggota, verifikasi: anggotaBelumVerifikasi });
+    } else {
+        res.redirect('/login')
+    }
 });
 
 //edit
 router.get('/anggota/:id', (req, res) => {
-    Anggota
-    .findByPk(req.params.id, {include: ['user']})
-    .then((anggota) => {
-        let data = anggota;
-        // console.log(anggota.user.email)
-        res.render('sites/admin/master/anggota/edit', { data: data });
-    })
-    .catch((error) => {
-        console.log(error);
-    })
+    //mengecek session login
+    if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        Anggota
+        .findByPk(req.params.id, {include: ['user']}) //ini buat relasi, 'user' itu dari alias di model
+        .then((anggota) => {
+            let data = anggota;
+            res.render('sites/admin/master/anggota/edit', { data: data });
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    } else {
+        res.redirect('/login')
+    }
 });
 
 // delete
 router.get('/anggota/destroy/:id', (req, res) => {
-    Anggota.findByPk(req.params.id)
-    .then((anggotanya) => {
-        Anggota.destroy({
-            where: {
-                id: req.params.id
-            }
-        });
+    if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        Anggota.findByPk(req.params.id)
+        .then((anggotanya) => {
+            Anggota.destroy({
+                where: {
+                    id: req.params.id
+                }
+            });
 
-        User.destroy({
-            where: {
-                id: anggotanya.userId
-            }
-        });
+            User.destroy({
+                where: {
+                    id: anggotanya.userId
+                }
+            });
 
-        res.redirect('/admin/anggota');
-    })
+            res.redirect('/admin/anggota');
+        })
+    } else {
+        res.redirect('/login')
+    }
 });
 
 module.exports = router

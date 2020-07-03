@@ -28,9 +28,9 @@
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form action="../../index.html" method="post">
+      <form action="/daftar" method="post">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="NIK">
+            <input type="text" class="form-control" placeholder="NIK" name="nik">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-id-card"></span>
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Nama">
+            <input type="text" class="form-control" placeholder="Nama" name="nama">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -46,7 +46,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Alamat">
+            <input type="text" class="form-control" placeholder="Alamat" name="alamat">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-home"></span>
@@ -67,33 +67,29 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Kota Lahir">
+            <input type="text" class="form-control" placeholder="Kota Lahir" name="kota">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-home"></span>
               </div>
             </div>
           </div>
+          <div class="form-group mb-3">
+            <label for="tglLahir">Tanggal Lahir</label>
+            <input type="date" class="form-control" placeholder="Tanggal Lahir" name="tglLahir">
+          </div>
+
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Tanggal Lahir">
+            <input type="text" class="form-control" placeholder="Email" name="email">
             <div class="input-group-append">
               <div class="input-group-text">
-                <span class="fas fa-id-card"></span>
+                <span class="fas fa-email"></span>
               </div>
             </div>
           </div>
 
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Username">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-user"></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password">
+            <input type="password" class="form-control" placeholder="Password" name="password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -104,22 +100,19 @@
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
-              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-              <label for="agreeTerms">
-               I agree to the <a href="#">terms</a>
-              </label>
+              <a href="/login" class="text-center">Sudah memliki akun</a>
             </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <button type="submit" class="btn btn-primary btn-block float-right">Register</button>
           </div>
           <!-- /.col -->
         </div>
       </form>
 
 
-      <a href="/login" class="text-center">Sudah memliki akun</a>
+      
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
