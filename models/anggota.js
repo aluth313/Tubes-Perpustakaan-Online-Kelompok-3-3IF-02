@@ -1,21 +1,17 @@
-const Sequelize = require('sequelize');
-
-const sequelize = require('../configs/sequelize');
-
-class Anggota extends Sequelize.Model { }
-
-Anggota.init({
-    nip: Sequelize.STRING,
-    nik: Sequelize.STRING,
-    email: Sequelize.STRING,
-    nama: Sequelize.STRING,
-    alamat: Sequelize.STRING,
-    jenis_kelamin: Sequelize.STRING,
-    kota_lahir: Sequelize.STRING,
-    tanggal_lahir: Sequelize.DATE
-
-}, {
-    sequelize, modelName: 'anggota'
-});
-
-module.exports = Anggota;
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  const Anggota = sequelize.define('Anggota', {
+    nik: DataTypes.STRING,
+    nama: DataTypes.STRING,
+    alamat: DataTypes.TEXT,
+    jk: DataTypes.STRING,
+    kota_lahir: DataTypes.STRING,
+    tgl_lahir: DataTypes.DATEONLY,
+    userId: DataTypes.INTEGER
+  }, {});
+  Anggota.associate = function(models) {
+    // associations can be defined here
+    Anggota.belongsTo(models.User, {foreignKey: 'userId', as: 'user'})
+  };
+  return Anggota;
+};

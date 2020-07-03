@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
-const Ebook = require('../models/ebook');
+const models = require('../models');
+const Ebook = models.Ebook;
 
 //create
 router.get('/ebook/tambah', (req, res) => {

@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const Buku = require('../models/buku');
+const models = require('../models');
+const Buku = models.Buku;
 
 
 router.get('/buku/tambah', (req, res) => {
@@ -14,9 +15,8 @@ router.post('/buku/tambah', (req, res) => {
         penerbit: req.body.penerbitBuku,
         pengarang: req.body.pengarangBuku,
         tahun: req.body.tahunBuku,
-        isbn: req.body.isbnBuku
-
-
+        isbn: req.body.isbnBuku,
+        jumlah: req.body.jumlah,
     };
 
     Buku
@@ -37,7 +37,8 @@ router.post('/buku/update/:id', (req, res) => {
             penerbit: req.body.penerbitBuku,
             pengarang: req.body.pengarangBuku,
             tahun: req.body.tahunBuku,
-            isbn: req.body.isbnBuku
+            isbn: req.body.isbnBuku,
+            jumlah: req.body.jumlah,
         }, {
             where: {
                 id: req.params.id

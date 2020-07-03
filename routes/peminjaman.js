@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
-const Peminjaman = require('../models/peminjaman');
-
+const models = require('../models');
+const Peminjaman = models.Peminjaman;
 
 router.get('/peminjaman/tambah', (req, res) => {
     res.render('sites/admin/master/peminjaman/tambah', { data: null });

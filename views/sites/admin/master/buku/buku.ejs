@@ -36,10 +36,10 @@
                     <tr>
                         <th>No</th>
                         <th>Judul</th>
-                        <th>Penerbit</th>
                         <th>Pengarang</th>
                         <th>Tahun</th>
                         <th>ISBN</th>
+                        <th>Jumlah</th>
                         <th>Actions</th>
 
                     </tr>
@@ -50,10 +50,10 @@
                     <tr>
                         <td> <%= no++ %> </td>
                         <td> <%= datbuk.judul %> </td>
-                        <td> <%= datbuk.penerbit %> </td>
                         <td> <%= datbuk.pengarang %> </td>
                         <td> <%= datbuk.tahun %> </td>
                         <td> <%= datbuk.isbn %> </td>
+                        <td> <%= datbuk.jumlah %> </td>
                         <td>
                             <a href="/admin/buku/destroy/<%= datbuk.id %>" class="btn btn-default"
                                 onclick="confirm('Anda yakin untuk menghapusnya?')">Hapus</a>

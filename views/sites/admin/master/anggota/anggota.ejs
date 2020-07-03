@@ -40,10 +40,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>nip</th>
                         <th>nik</th>
-                        <th>Email</th>
                         <th>Nama</th>
+                        <th>Jenis Kelamin</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -52,10 +51,9 @@
                     <% data.forEach((datagt) => { %>
                     <tr>
                         <td> <%= no++ %> </td>
-                        <td> <%= datagt.nip %> </td>
                         <td> <%= datagt.nik %> </td>
-                        <td> <%= datagt.email %> </td>
                         <td> <%= datagt.nama %> </td>
+                        <td> <%= datagt.jk %> </td>
                         <td>
                             <a href="/admin/anggota/destroy/<%= datagt.id %>" class="btn btn-default" onclick="confirm('Anda yakin untuk menghapusnya?')">Hapus</a>
                             <a href="/admin/anggota/<%= datagt.id %>" class="btn btn-default">Edit</a>

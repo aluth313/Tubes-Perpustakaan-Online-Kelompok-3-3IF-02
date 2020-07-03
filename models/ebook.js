@@ -1,17 +1,14 @@
-const Sequelize = require('sequelize');
-
-const sequelize = require('../configs/sequelize');
-
-class Ebook extends Sequelize.Model { }
-
-Ebook.init({
-    judul: Sequelize.STRING,
-    penerbit: Sequelize.STRING,
-    pengarang: Sequelize.STRING,
-    tahun: Sequelize.STRING,
-    linkFile: Sequelize.STRING
-}, {
-    sequelize, modelName: 'ebook'
-});
-
-module.exports = Ebook;
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  const Ebook = sequelize.define('Ebook', {
+    judul: DataTypes.STRING,
+    penerbit: DataTypes.STRING,
+    pengarang: DataTypes.STRING,
+    tahun: DataTypes.STRING,
+    file: DataTypes.STRING
+  }, {});
+  Ebook.associate = function(models) {
+    // associations can be defined here
+  };
+  return Ebook;
+};

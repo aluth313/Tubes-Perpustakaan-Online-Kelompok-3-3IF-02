@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-
-const Anggota = require('../models/anggota');
+const models = require('../models');
+const Anggota = models.Anggota;
+const User = models.User;
 
 //create
 router.get('/anggota/tambah', (req, res) => {
@@ -10,40 +11,52 @@ router.get('/anggota/tambah', (req, res) => {
 
 //store
 router.post('/anggota/tambah', (req, res) => {
-    let data = {
-        nip: req.body.nipAnggota,
-        nik: req.body.nikAnggota,
+    let user_id;
+    let createUser = User.create({
         email: req.body.emailAnggota,
-        nama: req.body.namaAnggota,
-        alamat: req.body.alamatAnggota,
-        jenis_kelamin: req.body.jkAnggota,
-        kota_lahir: req.body.klAnggota,
-        tanggal_lahir: req.body.tlAnggota
-
-    };
-
-    Anggota
-    .create(data)
-    .then((anggota) => {
-        res.redirect('/admin/anggota');
+        password: '12345678',
+        role: req.body.role
     })
-    .catch((error) => {
-        console.log(error);
+    .then((user) => {
+        let data = {
+            nik: req.body.nikAnggota,
+            nama: req.body.namaAnggota,
+            alamat: req.body.alamatAnggota,
+            jk: req.body.jkAnggota,
+            kota_lahir: req.body.klAnggota,
+            tgl_lahir: req.body.tlAnggota,
+            userId: user.id
+        };
+
+        Anggota
+        .create(data);
+
+        res.redirect('/admin/anggota');
     })
 });
 
 //update
 router.post('/anggota/update/:id', (req, res) => {
+    Anggota.findByPk(req.params.id)
+    .then((anggotaId) => {
+        User.update({
+            email: req.body.emailAnggota,
+            role: req.body.role
+        }, {
+            where: {
+                id: anggotaId.userId
+            }
+        });
+    });
+
     Anggota
     .update({
-        nip: req.body.nipAnggota,
         nik: req.body.nikAnggota,
-        email: req.body.emailAnggota,
         nama: req.body.namaAnggota,
         alamat: req.body.alamatAnggota,
-        jenis_kelamin: req.body.jkAnggota,
+        jk: req.body.jkAnggota,
         kota_lahir: req.body.klAnggota,
-        tanggal_lahir: req.body.tlAnggota
+        tgl_lahir: req.body.tlAnggota
     }, {
         where: {
             id: req.params.id
@@ -73,9 +86,10 @@ router.get('/anggota', (req, res) => {
 //edit
 router.get('/anggota/:id', (req, res) => {
     Anggota
-    .findByPk(req.params.id)
+    .findByPk(req.params.id, {include: ['user']})
     .then((anggota) => {
         let data = anggota;
+        // console.log(anggota.user.email)
         res.render('sites/admin/master/anggota/edit', { data: data });
     })
     .catch((error) => {
@@ -85,16 +99,21 @@ router.get('/anggota/:id', (req, res) => {
 
 // delete
 router.get('/anggota/destroy/:id', (req, res) => {
-    Anggota.destroy({
-        where: {
-            id: req.params.id
-        }
-    })
-    .then(() => {
+    Anggota.findByPk(req.params.id)
+    .then((anggotanya) => {
+        Anggota.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+
+        User.destroy({
+            where: {
+                id: anggotanya.userId
+            }
+        });
+
         res.redirect('/admin/anggota');
-    })
-    .catch((error) => {
-        console.log(error);
     })
 });
 

@@ -14,11 +14,11 @@ const Anggota = require('./models/anggota');
 const anggotaRoutes = require('./routes/anggota');
 const bukuRoutes = require('./routes/buku');
 const peminjamanRoutes = require('./routes/peminjaman');
-const penggunaRoutes = require('./routes/pengguna');
-const detailRoutes = require('./routes/detail');
+// const penggunaRoutes = require('./routes/pengguna');
+// const detailRoutes = require('./routes/detail');
 const Buku = require('./models/buku');
 const Peminjaman = require('./models/peminjaman');
-const Pengguna = require('./models/pengguna');
+// const Pengguna = require('./models/pengguna');
 const Ebook = require('./models/ebook');
 const ebookRoutes = require('./routes/ebook');
 
@@ -45,8 +45,8 @@ app.get('/admin/dashboard', function (req, res) {
 app.use('/admin', anggotaRoutes);
 app.use('/admin', bukuRoutes);
 app.use('/admin', peminjamanRoutes);
-app.use('/admin', penggunaRoutes);
-app.use('/admin', detailRoutes);
+// app.use('/admin', penggunaRoutes);
+// app.use('/admin', detailRoutes);
 app.use('/admin', ebookRoutes);
 
 
