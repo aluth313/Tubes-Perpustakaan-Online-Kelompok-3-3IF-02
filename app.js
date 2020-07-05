@@ -19,6 +19,11 @@ app.use(session({
 	saveUninitialized: true
 }));
 
+// app.use(function(req, res, next) {
+//   res.locals.user = req.session.nama;
+//   next();
+// });
+
 const Anggota = require('./models/Anggota');
 const anggotaRoutes = require('./routes/anggota');
 const bukuRoutes = require('./routes/buku');

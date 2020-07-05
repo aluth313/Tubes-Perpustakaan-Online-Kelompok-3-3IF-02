@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 const session = require('express-session');
+const url = require('url');
 const Anggota = models.Anggota;
 const User = models.User;
 
@@ -30,13 +31,27 @@ router.post('/anggota/tambah', (req, res) => {
                 jk: req.body.jkAnggota,
                 kota_lahir: req.body.klAnggota,
                 tgl_lahir: req.body.tlAnggota,
-                userId: user.id
+                userId: user.id,
+                status: 1,
             };
 
             Anggota
             .create(data);
 
-            res.redirect('/admin/anggota');
+            res.redirect(url.format({
+                pathname:"/admin/anggota",
+                query: {
+                    "sukses": "Anggota berhasil ditambahkan!"
+                }
+            }));
+      //       res.redirect(url.format({
+      //        pathname:"/",
+      //        query: {
+      //         "a": 1,
+      //         "b": 2,
+      //         "valid":"your string here"
+      //     }
+      // }));
         })
     } else {
         res.redirect('/login')
