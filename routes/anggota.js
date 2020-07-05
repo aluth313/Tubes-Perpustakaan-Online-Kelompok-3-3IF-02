@@ -38,20 +38,7 @@ router.post('/anggota/tambah', (req, res) => {
             Anggota
             .create(data);
 
-            res.redirect(url.format({
-                pathname:"/admin/anggota",
-                query: {
-                    "sukses": "Anggota berhasil ditambahkan!"
-                }
-            }));
-      //       res.redirect(url.format({
-      //        pathname:"/",
-      //        query: {
-      //         "a": 1,
-      //         "b": 2,
-      //         "valid":"your string here"
-      //     }
-      // }));
+            res.redirect('/admin/anggota');
         })
     } else {
         res.redirect('/login')
