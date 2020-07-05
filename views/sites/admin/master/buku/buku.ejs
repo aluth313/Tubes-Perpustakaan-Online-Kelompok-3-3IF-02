@@ -40,6 +40,7 @@
                         <th>Tahun</th>
                         <th>ISBN</th>
                         <th>Jumlah</th>
+                        <!-- <th>Cover</th> -->
                         <th>Actions</th>
 
                     </tr>
@@ -54,6 +55,9 @@
                         <td> <%= datbuk.tahun %> </td>
                         <td> <%= datbuk.isbn %> </td>
                         <td> <%= datbuk.jumlah %> </td>
+                        <!-- <td>
+                            <img src="/buku/<%= datbuk.cover %>" alt="tidak ada gambar">
+                        </td> -->
                         <td>
                             <a href="/admin/buku/destroy/<%= datbuk.id %>" class="btn btn-default"
                                 onclick="confirm('Anda yakin untuk menghapusnya?')">Hapus</a>

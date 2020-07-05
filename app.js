@@ -7,6 +7,7 @@ const models = require('./models');
 const Anggota1 = models.Anggota;
 const User1 = models.User;
 const session = require('express-session');
+const upload = require('express-fileupload');
 
 const bodyParser = require('body-parser');
 app.use(express.static('public'));
@@ -18,6 +19,7 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
+app.use(upload());
 
 // app.use(function(req, res, next) {
 //   res.locals.user = req.session.nama;
