@@ -73,15 +73,12 @@ app.post("/login", async function(req, res) {
 			req.session.anggotaId = anggotaLogin.id;
 			res.redirect('/admin/dashboard')
 		} else {
-<<<<<<< HEAD
-			res.redirect('/user/profile')
-=======
->>>>>>> dd1a83638949e392360af81477e114a91773e7ac
 			req.session.loggedin = true;
 			req.session.nama = anggotaLogin.nama;
 			req.session.userId = userLogin.id;
 			req.session.anggotaId = anggotaLogin.id;
-			res.redirect('/')
+			res.redirect('/user/profile')
+			// res.redirect('/')
 		}
 	} else {
 		res.render('sites/login', {error: 'Email atau password tidak terdaftar!'})
