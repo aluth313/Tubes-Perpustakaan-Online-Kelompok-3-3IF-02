@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 const Ebook = models.Ebook;
+const upload = require('express-fileupload');
+
+const app = express()
+app.use(upload())
 
 //create
 router.get('/ebook/tambah', (req, res) => {
@@ -10,12 +14,19 @@ router.get('/ebook/tambah', (req, res) => {
 
 //store
 router.post('/ebook/tambah', (req, res) => {
+    if (req.files) {
+        let file = req.files.file;
+        let filename = file.name;
+        file.mv('./public/ebook/'+filename, function(err) {
+            if (err) {
+                res.send(err)
+            } else {
     let data = {
         judul: req.body.judul,
         penerbit: req.body.penerbit,
         pengarang: req.body.pengarang,
         tahun: req.body.tahun,
-        linkFile: req.body.linkFile
+        file: filename
     };
 
     Ebook
@@ -26,6 +37,13 @@ router.post('/ebook/tambah', (req, res) => {
     .catch((error) => {
         console.log(error);
     })
+
+      }
+        })
+    } else {
+        res.send('Tidak ada file')
+    }
+
 });
 
 //update
@@ -36,7 +54,7 @@ router.post('/ebook/update/:id', (req, res) => {
         penerbit: req.body.penerbit,
         pengarang: req.body.pengarang,
         tahun: req.body.tahun,
-        linkFile: req.body.linkFile
+        file: req.body.file
     }, {
         where: {
             id: req.params.id

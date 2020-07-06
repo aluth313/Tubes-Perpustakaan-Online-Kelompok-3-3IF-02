@@ -23,7 +23,7 @@
     </section>
     <!-- Main content -->
     <div class="card-body">
-        <form role="form" action="/admin/ebook/tambah" method="POST">
+        <form role="form" action="/admin/ebook/tambah" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-sm-7">
                     <!-- text input -->
@@ -56,10 +56,10 @@
             </div>
             <div class="row">
                 <div class="col-sm-7">
-                    <!-- textarea -->
+                    <!-- text input -->
                     <div class="form-group">
-                        <label>Link File</label>
-                        <textarea class="form-control" name="linkFile" rows="3" placeholder="Enter ..."></textarea>
+                        <label>File</label>
+                        <input type="file" class="form-control" name="file" placeholder="Enter ...">
                     </div>
                 </div>
             <div class="col-sm-7">
