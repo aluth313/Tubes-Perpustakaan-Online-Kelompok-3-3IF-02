@@ -43,27 +43,56 @@ router.post('/buku/tambah', (req, res) => {
 
 //update
 router.post('/buku/update/:id', (req, res) => {
-
-    Buku
-    .update({
-        judul: req.body.judulBuku,
-        penerbit: req.body.penerbitBuku,
-        pengarang: req.body.pengarangBuku,
-        tahun: req.body.tahunBuku,
-        isbn: req.body.isbnBuku,
-        jumlah: req.body.jumlah,
-    }, {
-        where: {
-            id: req.params.id
-        }
-    })
-    .then((buku) => {
-        res.redirect('/admin/buku');
-    })
-    .catch((error) => {
-        console.log(error);
-    })
-
+    if (req.files) {
+        let file = req.files.file;
+        let filename = file.name;
+        file.mv('./public/buku/'+filename, function(err) {
+            if (err) {
+                res.send(err)
+            } else {
+                Buku
+                .update({
+                    judul: req.body.judulBuku,
+                    penerbit: req.body.penerbitBuku,
+                    pengarang: req.body.pengarangBuku,
+                    tahun: req.body.tahunBuku,
+                    isbn: req.body.isbnBuku,
+                    jumlah: req.body.jumlah,
+                    cover: filename,
+                }, {
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then((buku) => {
+                    res.redirect('/admin/buku');
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            }
+        })
+    } else {
+        Buku
+        .update({
+            judul: req.body.judulBuku,
+            penerbit: req.body.penerbitBuku,
+            pengarang: req.body.pengarangBuku,
+            tahun: req.body.tahunBuku,
+            isbn: req.body.isbnBuku,
+            jumlah: req.body.jumlah,
+        }, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then((buku) => {
+            res.redirect('/admin/buku');
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
 });
 
 //index
