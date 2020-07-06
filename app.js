@@ -30,11 +30,8 @@ const Anggota = require('./models/Anggota');
 const anggotaRoutes = require('./routes/anggota');
 const bukuRoutes = require('./routes/buku');
 const peminjamanRoutes = require('./routes/peminjaman');
-// const penggunaRoutes = require('./routes/pengguna');
-// const detailRoutes = require('./routes/detail');
 const Buku = require('./models/buku');
 const Peminjaman = require('./models/peminjaman');
-// const Pengguna = require('./models/pengguna');
 const Ebook = require('./models/ebook');
 const User = require('./models/User');
 const ebookRoutes = require('./routes/ebook');
@@ -67,21 +64,17 @@ app.post("/login", async function(req, res) {
 			}
 		})
 		if (userLogin.role == 'admin') {
-			console.log('')
-			console.log('sebelum')
-			console.log(req.session.loggedin)
-			console.log(req.session.nama)
 			req.session.loggedin = true;
 			req.session.nama = anggotaLogin.nama;
+			req.session.userId = userLogin.id;
+			req.session.anggotaId = anggotaLogin.id;
 			res.redirect('/admin/dashboard')
-			console.log('')
-			console.log('sesudah')
-			console.log(req.session.loggedin)
-			console.log(req.session.nama)
 		} else {
-			res.redirect('/')
 			req.session.loggedin = true;
 			req.session.nama = anggotaLogin.nama;
+			req.session.userId = userLogin.id;
+			req.session.anggotaId = anggotaLogin.id;
+			res.redirect('/')
 		}
 	} else {
 		res.render('sites/login', {error: 'Email atau password tidak terdaftar!'})
