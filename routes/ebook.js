@@ -9,12 +9,18 @@ app.use(upload())
 
 //create
 router.get('/ebook/tambah', (req, res) => {
-    res.render('sites/admin/master/ebook/tambah', { data: null });
+        if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        res.render('sites/admin/master/ebook/tambah', { data: null });
+    }else {
+        res.redirect('/login')
+    }
 });
 
 //store
 router.post('/ebook/tambah', (req, res) => {
-    if (req.files) {
+
+        if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+      if (req.files) {
         let file = req.files.file;
         let filename = file.name;
         file.mv('./public/ebook/'+filename, function(err) {
@@ -44,10 +50,22 @@ router.post('/ebook/tambah', (req, res) => {
         res.send('Tidak ada file')
     }
 
+
+    }else {
+        res.redirect('/login')
+    }
+
+
+   
+
 });
 
 //update
 router.post('/ebook/update/:id', (req, res) => {
+
+
+   if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+       
     Ebook
     .update({
         judul: req.body.judul,
@@ -66,11 +84,17 @@ router.post('/ebook/update/:id', (req, res) => {
     .catch((error) => {
         console.log(error);
     })
+    }else {
+        res.redirect('/login')
+    }
+
+
 });
 
 //index
 router.get('/ebook', (req, res) => {
-    Ebook
+        if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+         Ebook
     .findAll()
     .then((ebook) => {
         let data = ebook;
@@ -79,11 +103,18 @@ router.get('/ebook', (req, res) => {
     .catch((error) => {
         console.log(error);
     })
+    }else {
+        res.redirect('/login')
+    }
+    
+   
 });
 
 //edit
 router.get('/ebook/:id', (req, res) => {
-    Ebook
+
+   if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+          Ebook
     .findByPk(req.params.id)
     .then((ebook) => {
         let data = ebook;
@@ -92,11 +123,19 @@ router.get('/ebook/:id', (req, res) => {
     .catch((error) => {
         console.log(error);
     })
+    }else {
+        res.redirect('/login')
+    }
+
+ 
 });
 
 // delete
 router.get('/ebook/destroy/:id', (req, res) => {
-    Ebook.destroy({
+
+
+ if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        Ebook.destroy({
         where: {
             id: req.params.id
         }
@@ -107,6 +146,11 @@ router.get('/ebook/destroy/:id', (req, res) => {
     .catch((error) => {
         console.log(error);
     })
+    }else {
+        res.redirect('/login')
+    }
+
+    
 });
 
 module.exports = router
