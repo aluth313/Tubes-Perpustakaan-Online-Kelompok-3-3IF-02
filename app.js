@@ -39,6 +39,9 @@ const Ebook = require('./models/ebook');
 const User = require('./models/User');
 const ebookRoutes = require('./routes/ebook');
 
+const userProfilekRoutes = require('./routes/userProfile');
+const userPeminjamanRoutes = require('./routes/userPeminjaman');
+
 app.get("/", function (request, response) {
 	response.render('sites/index');
 });
@@ -79,7 +82,7 @@ app.post("/login", async function(req, res) {
 			console.log(req.session.loggedin)
 			console.log(req.session.nama)
 		} else {
-			res.redirect('/')
+			res.redirect('/user/profile')
 			req.session.loggedin = true;
 			req.session.nama = anggotaLogin.nama;
 		}
@@ -139,6 +142,8 @@ app.use('/admin', peminjamanRoutes);
 // app.use('/admin', penggunaRoutes);
 // app.use('/admin', detailRoutes);
 app.use('/admin', ebookRoutes);
+app.use('/user', userProfilekRoutes);
+app.use('/user', userPeminjamanRoutes);
 
 
 
