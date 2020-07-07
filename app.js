@@ -39,6 +39,9 @@ const ebookRoutes = require('./routes/ebook');
 const userProfilekRoutes = require('./routes/userProfile');
 const userPeminjamanRoutes = require('./routes/userPeminjaman');
 
+const umumBuku = require('./routes/umumBuku');
+const umumEbook = require('./routes/umumEbook');
+
 app.get("/", function (request, response) {
 	response.render('sites/index');
 });
@@ -73,10 +76,7 @@ app.post("/login", async function(req, res) {
 			req.session.anggotaId = anggotaLogin.id;
 			res.redirect('/admin/dashboard')
 		} else {
-<<<<<<< HEAD
 			res.redirect('/user/profile')
-=======
->>>>>>> dd1a83638949e392360af81477e114a91773e7ac
 			req.session.loggedin = true;
 			req.session.nama = anggotaLogin.nama;
 			req.session.userId = userLogin.id;
@@ -141,6 +141,8 @@ app.use('/admin', peminjamanRoutes);
 app.use('/admin', ebookRoutes);
 app.use('/user', userProfilekRoutes);
 app.use('/user', userPeminjamanRoutes);
+app.use('/umum', umumBuku);
+app.use('/umum', umumEbook);
 
 
 
