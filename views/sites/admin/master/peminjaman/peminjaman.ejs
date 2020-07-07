@@ -1,69 +1,118 @@
 <%- include ('../../../../partials/admin/header') -%>
 
-<title>Home</title>
+<title>Peminjaman</title>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Master Peminjaman</h1>
+    <div class="container">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Peminjaman</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item active">Peminjaman</li>
+                        </ol>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
-                    </ol>
-                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Perlu diverifikasi</h3>
             </div>
+            <%   
+            let no1 = 1;
+            %>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Buku</th>
+                            <th>Tanggal Peminjaman</th>
+                            <th>Tanggal Pengembalian</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(booking) { %>
+                        <% booking.forEach((data) => { %>
+                        <tr>
+                            <td> <%= no1++ %> </td>
+                            <td> <%= data.anggota.nama %> </td>
+                            <td> <%= data.buku.judul %> </td>
+                            <td> <%= data.tgl_peminjaman %> </td>
+                            <td> <%= data.tgl_pengembalian %> </td>
+                            <td>
+                                <form action="/admin/peminjaman/terima/<%= data.id %>" method="post">
+                                    <a href="/admin/peminjaman/tolak/<%= data.id %>" class="btn btn-default" onclick="confirm('Anda yakin untuk menolaknya?')">Tolak</a>
+                                    <input type="submit" name="submit" onclick="confirm('Anda yakin untuk menerimanya?')" value="Terima" class="btn btn-default">
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                    </tbody>
 
-        </div><!-- /.container-fluid -->
-    </section>
-    <!-- Main content -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
+                </table>
+            </div>
+            <!-- /.card-body -->
         </div>
-        <%   
-  let no = 1;
-   %>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Tanggal Peminjaman</th>
-                        <th>Tanggal Pengembalian</th>
-                        <th>Status</th>
-                        <th>NIP</th>
-                        <th>ISBN</th>
-                        <th>No Registrasi</th>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Terverifikasi</h3>
+            </div>
+            <%   
+            let no = 1;
+            %>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="terverfikasi" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Buku</th>
+                            <th>Tanggal Peminjaman</th>
+                            <th>Tanggal Pengembalian</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(data) { %>
+                        <% data.forEach((datpin) => { %>
+                        <tr>
+                            <td> <%= no++ %> </td>
+                            <td> <%= datpin.anggota.nama %> </td>
+                            <td> <%= datpin.buku.judul %> </td>
+                            <td> <%= datpin.tgl_peminjaman %> </td>
+                            <td> <%= datpin.tgl_pengembalian %> </td>
+                            <td> <%= datpin.status %> </td>
+                            <td>
+                                <% if (datpin.status == 'dipinjam') { %>
+                                <form action="/admin/peminjaman/kembali/<%= datpin.id %>" method="post">
+                                    <input type="submit" name="submit" value="Dikembalikan" class="btn btn-default" onclick="confirm('Anda yakin sudah menerima buku yang dipinjam?')">
+                                </form>
+                                <% } %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                        <% } %>
+                    </tbody>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <% if(data) { %>
-                    <% data.forEach((datpin) => { %>
-                    <tr>
-                        <td> <%= no++ %> </td>
-                        <td> <%= datpin.tanggal_peminjaman %> </td>
-                        <td> <%= datpin.tanggal_pengembalian %> </td>
-                        <td> <%= datpin.status %> </td>
-                        <td> <%= datpin.nip %> </td>
-                        <td> <%= datpin.isbn %> </td>
-                        <td> <%= datpin.no_registrasi %> </td>
-
-                    </tr>
-                    <% }) %>
-                    <% } %>
-                </tbody>
-
-            </table>
+                </table>
+            </div>
+            <!-- /.card-body -->
         </div>
-        <!-- /.card-body -->
     </div>
     <!-- /.content -->
 </div>
@@ -71,3 +120,13 @@
 <!-- import data footer -->
 
 <%- include ('../../../../partials/admin/footer') -%>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#terverfikasi").DataTable({
+          "responsive": true,
+          "autoWidth": false,
+      });
+        $('#peminjaman').addClass("active");
+    })
+</script>
