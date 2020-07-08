@@ -6,6 +6,8 @@ const sequelize = require('./configs/sequelize');
 const models = require('./models');
 const Anggota1 = models.Anggota;
 const User1 = models.User;
+const Peminjaman = models.Peminjaman;
+const Buku = models.Buku;
 const session = require('express-session');
 const upload = require('express-fileupload');
 
@@ -30,8 +32,8 @@ const Anggota = require('./models/Anggota');
 const anggotaRoutes = require('./routes/anggota');
 const bukuRoutes = require('./routes/buku');
 const peminjamanRoutes = require('./routes/peminjaman');
-const Buku = require('./models/buku');
-const Peminjaman = require('./models/peminjaman');
+// const Buku = require('./models/buku');
+// const Peminjaman = require('./models/peminjaman');
 const Ebook = require('./models/ebook');
 const User = require('./models/User');
 const ebookRoutes = require('./routes/ebook');
@@ -56,6 +58,35 @@ app.get("/logout", function (request, response) {
 	response.redirect('/login')
 });
 
+app.get("/pinjam/:id", async function (req, res) {
+	if (req.session.loggedin == true) {
+		let today = new Date();
+		let tglPinjam = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+		let tglKembali = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1);
+		Peminjaman
+		.create({
+			tgl_peminjaman: tglPinjam,
+			tgl_pengembalian: tglKembali,
+			status: 'booking',
+			anggota_id: req.session.anggotaId,
+			buku_id: req.params.id,
+		})
+		Buku.findByPk(req.params.id)
+		.then((pinjam) => {
+			Buku.update({
+				jumlah: (pinjam.jumlah - 1)
+			},{
+				where: {
+					id: pinjam.id
+				}
+			})
+		})
+		res.send('sukses di pinjam')
+	} else {
+		res.redirect('/login')
+	}
+});
+
 app.post("/login", async function(req, res) {
 	let userLogin = await User1.findOne({
 		where: {
@@ -76,13 +107,11 @@ app.post("/login", async function(req, res) {
 			req.session.anggotaId = anggotaLogin.id;
 			res.redirect('/admin/dashboard')
 		} else {
-			res.redirect('/user/profile')
 			req.session.loggedin = true;
 			req.session.nama = anggotaLogin.nama;
 			req.session.userId = userLogin.id;
 			req.session.anggotaId = anggotaLogin.id;
 			res.redirect('/user/profile')
-			// res.redirect('/')
 		}
 	} else {
 		res.render('sites/login', {error: 'Email atau password tidak terdaftar!'})
