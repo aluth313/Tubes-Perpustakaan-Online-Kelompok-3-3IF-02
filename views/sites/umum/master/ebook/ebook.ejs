@@ -1,81 +1,69 @@
-<%- include ('../../../../partials/umum/header') -%>
+<%- include ('../../../../partials/user/header1') -%>
 
-<title>Home</title>
+<title>Daftar Buku</title>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<%- include ('../../../../partials/user/css') -%>
+
+<section class="page-section bg-light" id="buku">
     <div class="container">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Daftar Ebook</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item active">Buku</li>
-                        </ol>
-                    </div>
-                </div>
-
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- Main content -->
-        <div class="card">
-
- 
-            <!-- /.card-header -->
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Daftar Ebook</h2>
+        </div>
+        <%   
+        let no = 1;
+        %>
+        <div class="row">
             <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Judul</th>
+                            <th>Penerbit</th>
                             <th>Pengarang</th>
                             <th>Tahun</th>
-                            <th>ISBN</th>
-                            <th>Jumlah</th>
-                            <!-- <th>Cover</th> -->
-                            <th>Actions</th>
-
+                            <th>Unduh File</th>
                         </tr>
                     </thead>
                     <tbody>
-                    
-                            <tr>
-                                <td>  </td>
-                                <td>  </td>
-                                <td>  </td>
-                                <td>  </td>
-                                <td>  </td>
-                                <td>  </td>
-                
-                                <td>
-                                    <a href="" class="btn btn-default">Unduh</a>
-                                </td>
-
-                            </tr>
-                    
+                        <% if(data) { %>
+                        <% data.forEach((datagt) => { %>
+                        <tr>
+                            <td> <%= no++ %> </td>
+                            <td> <%= datagt.judul %> </td>
+                            <td> <%= datagt.penerbit %> </td>
+                            <td> <%= datagt.pengarang %> </td>
+                            <td> <%= datagt.tahun %> </td>
+                            <td> <a href="/umum/ebook/download/<%= datagt.id %>" class="btn btn-info">Unduh</a> </td>
+                            
+                        </tr>
+                        <% }) %>
+                        <% } %>
                     </tbody>
-
+    
                 </table>
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.content -->
-        
     </div>
-</div>
-<!-- /.content-wrapper -->
-<!-- import data footer -->
+</section>
 
-<%- include ('../../../../partials/umum/footer') -%>
-<script type="text/javascript">
-    $(document).ready(function () {
-
-    })
+<%- include ('../../../../partials/user/footer1') -%>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+  });
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+  });
+});
 </script>
 </body>
-
 </html>

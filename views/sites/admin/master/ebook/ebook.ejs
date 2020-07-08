@@ -44,7 +44,7 @@
                         <th>Penerbit</th>
                         <th>Pengarang</th>
                         <th>Tahun</th>
-                        <th>Link File</th>
+                        <th>Unduh File</th>
                         <th>Edit</th>
                         <th>Hapus</th>
                     </tr>
@@ -58,7 +58,7 @@
                         <td> <%= datagt.penerbit %> </td>
                         <td> <%= datagt.pengarang %> </td>
                         <td> <%= datagt.tahun %> </td>
-                        <td> <%= datagt.file %> </td>
+                        <td> <a href="/admin/ebook/download/<%= datagt.id %>" class="btn btn-default">Unduh</a> </td>
                         <td>
                             <a href="/admin/ebook/<%= datagt.id %>" class="btn btn-default">Edit</a>
                         </td>
