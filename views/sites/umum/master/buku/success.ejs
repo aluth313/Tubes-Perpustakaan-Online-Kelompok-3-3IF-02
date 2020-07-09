@@ -1,0 +1,38 @@
+<%- include ('../../../../partials/user/header1') -%>
+
+<title>Sukses Booking</title>
+
+<%- include ('../../../../partials/user/css') -%>
+
+<section class="page-section bg-light" id="buku">
+  <div class="container">
+    <div class="row">
+      <div class="card-body">
+        <div class="alert alert-success" role="alert">
+          Berhasil booking, tunggu verifikasi dari Admin. Anda dapat melihat update-an verifikasi pada halaman peminjaman setelah Anda login. Terima kasih :)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include ('../../../../partials/user/footer1') -%>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+    });
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+</body>
+</html>

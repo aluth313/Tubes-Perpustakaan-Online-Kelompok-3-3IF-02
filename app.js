@@ -45,7 +45,7 @@ const umumBuku = require('./routes/umumBuku');
 const umumEbook = require('./routes/umumEbook');
 
 app.get("/", function (request, response) {
-	response.render('sites/index');
+	response.render('sites/index',{loggedin: request.session.loggedin});
 });
 
 app.get("/login", function (request, response) {
@@ -58,15 +58,15 @@ app.get("/logout", function (request, response) {
 	response.redirect('/login')
 });
 
-app.get("/pinjam/:id", async function (req, res) {
+app.post("/pinjam/:id", async function (req, res) {
 	if (req.session.loggedin == true) {
 		let today = new Date();
 		let tglPinjam = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 		let tglKembali = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1);
 		Peminjaman
 		.create({
-			tgl_peminjaman: tglPinjam,
-			tgl_pengembalian: tglKembali,
+			tgl_peminjaman: req.body.tglPinjam,
+			tgl_pengembalian: req.body.tglKembali,
 			status: 'booking',
 			anggota_id: req.session.anggotaId,
 			buku_id: req.params.id,
@@ -81,7 +81,18 @@ app.get("/pinjam/:id", async function (req, res) {
 				}
 			})
 		})
-		res.send('sukses di pinjam')
+		res.render('sites/umum/master/buku/success')
+	} else {
+		res.redirect('/login')
+	}
+});
+
+app.get("/pinjam/tgl-kembali/:id", async function (req, res) {
+	if (req.session.loggedin == true) {
+		Buku.findByPk(req.params.id)
+		.then((buku) => {
+			res.render('sites/umum/master/buku/pinjam', {buku: buku})
+		})
 	} else {
 		res.redirect('/login')
 	}

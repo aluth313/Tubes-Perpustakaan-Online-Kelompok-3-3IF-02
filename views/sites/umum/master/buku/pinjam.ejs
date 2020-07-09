@@ -1,0 +1,77 @@
+<%- include ('../../../../partials/user/header1') -%>
+
+<title>Daftar Buku</title>
+
+<%- include ('../../../../partials/user/css') -%>
+
+<section class="page-section bg-light" id="buku">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-heading text-uppercase">Form Peminjaman</h2>
+    </div>
+    <div class="row">
+      <form action="/pinjam/<%= buku.id %>" method="post">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="judul">Judul</label>
+                <input type="text" name="buku" class="form-control" readonly value="<%= buku.judul %>">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="pengarang">Pengarang</label>
+                <input type="text" name="pengarang" class="form-control" readonly value="<%= buku.pengarang %>">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="isbn">ISBN</label>
+                <input type="text" name="isbn" class="form-control" readonly value="<%= buku.isbn %>">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="tglPinjam">Tanggal Peminjaman</label>
+                <input type="date" name="tglPinjam" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="tglKembali">Tanggal Pengembalian</label>
+                <input type="date" name="tglKembali" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group float-right">
+                <input type="submit" name="submit" value="Ajukan" class="btn btn-info">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include ('../../../../partials/user/footer1') -%>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+    });
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+</body>
+</html>
