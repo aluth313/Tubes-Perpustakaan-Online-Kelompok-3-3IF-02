@@ -14,7 +14,7 @@ router.get('/buku', (req, res) => {
 		]
 	})
 	.then((buku) => {
-		res.render('sites/umum/master/buku/buku', {buku: buku});
+		res.render('sites/umum/master/buku/buku', {loggedin: req.session.loggedin, buku: buku});
 	})
 });
 
