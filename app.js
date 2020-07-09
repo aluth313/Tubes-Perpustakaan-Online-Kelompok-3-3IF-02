@@ -10,6 +10,15 @@ const Peminjaman = models.Peminjaman;
 const Buku = models.Buku;
 const session = require('express-session');
 const upload = require('express-fileupload');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: 'filmdownload769@gmail.com',
+		pass: 'Persinas313.'
+	}
+});
 
 const bodyParser = require('body-parser');
 app.use(express.static('public'));
@@ -81,6 +90,19 @@ app.post("/pinjam/:id", async function (req, res) {
 				}
 			})
 		})
+		const mailOptions = {
+			from: 'filmdownload769@gmail.com',
+			to: 'luthfiahmad36@gmail.com',
+			subject: 'Peminjaman Buku',
+			html: '<h3>Haii Admin</h3><p>Ada yang mau pinjam buku nih, kuy buka di halaman Peminjaman</p>'
+		};
+		transporter.sendMail(mailOptions, function(error, info){
+			if (error) {
+				console.log(error);
+			} else {
+				console.log('Email sent: ' + info.response);
+			}
+		});
 		res.render('sites/umum/master/buku/success')
 	} else {
 		res.redirect('/login')
@@ -118,11 +140,15 @@ app.post("/login", async function(req, res) {
 			req.session.anggotaId = anggotaLogin.id;
 			res.redirect('/admin/dashboard')
 		} else {
-			req.session.loggedin = true;
-			req.session.nama = anggotaLogin.nama;
-			req.session.userId = userLogin.id;
-			req.session.anggotaId = anggotaLogin.id;
-			res.redirect('/user/profile')
+			if (anggotaLogin.status == 1) {
+				req.session.loggedin = true;
+				req.session.nama = anggotaLogin.nama;
+				req.session.userId = userLogin.id;
+				req.session.anggotaId = anggotaLogin.id;
+				res.redirect('/user/profile')
+			} else {
+				res.render('sites/login', {error: 'Akun Anda belum di verifikasi oleh Admin!'})
+			}
 		}
 	} else {
 		res.render('sites/login', {error: 'Email atau password tidak terdaftar!'})
@@ -153,6 +179,20 @@ app.post("/daftar", function (req, res) {
 
 		Anggota1
 		.create(data);
+
+		const mailOptions = {
+			from: 'filmdownload769@gmail.com',
+			to: 'luthfiahmad36@gmail.com',
+			subject: 'Pendaftar Baru',
+			html: '<h3>Haii Admin</h3><p>Ada yang daftar nih, kuy buka di halaman Data Anggota</p>'
+		};
+		transporter.sendMail(mailOptions, function(error, info){
+			if (error) {
+				console.log(error);
+			} else {
+				console.log('Email sent: ' + info.response);
+			}
+		});
 
 		res.redirect('/login');
 	})

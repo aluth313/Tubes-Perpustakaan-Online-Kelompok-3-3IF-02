@@ -5,6 +5,15 @@ const session = require('express-session');
 const url = require('url');
 const Anggota = models.Anggota;
 const User = models.User;
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'filmdownload769@gmail.com',
+        pass: 'Persinas313.'
+    }
+});
 
 //create
 router.get('/anggota/tambah', (req, res) => {
@@ -86,8 +95,10 @@ router.post('/anggota/update/:id', (req, res) => {
 
 
 //verifikasi
-router.post('/anggota/update-status/:id', (req, res) => {
+router.post('/anggota/update-status/:id', async (req, res) => {
     if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        let anggota = await Anggota.findByPk(req.params.id);
+        let user = await User.findByPk(anggota.userId);
         Anggota
         .update({
             status: 1,
@@ -96,7 +107,20 @@ router.post('/anggota/update-status/:id', (req, res) => {
                 id: req.params.id
             }
         })
-        .then((anggota) => {
+        .then(() => {
+            const mailOptions = {
+                from: 'filmdownload769@gmail.com',
+                to: user.email,
+                subject: 'Akun sudah diverifikasi',
+                html: '<h3>Haii ' + anggota.nama + ' </h3><p>Kamu sekarang udah bisa masuk nih ke website perpustakaan online, ayoo baca buku!!</p>'
+            };
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
             res.redirect('/admin/anggota');
         })
         .catch((error) => {
@@ -146,8 +170,10 @@ router.get('/anggota/:id', (req, res) => {
 });
 
 // delete
-router.get('/anggota/destroy/:id', (req, res) => {
+router.get('/anggota/destroy/:id', async (req, res) => {
     if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+        let anggota = await Anggota.findByPk(req.params.id);
+        let user = await User.findByPk(anggota.userId);
         Anggota.findByPk(req.params.id)
         .then((anggotanya) => {
             Anggota.destroy({
@@ -159,6 +185,21 @@ router.get('/anggota/destroy/:id', (req, res) => {
             User.destroy({
                 where: {
                     id: anggotanya.userId
+                }
+            });
+
+
+            const mailOptions = {
+                from: 'filmdownload769@gmail.com',
+                to: user.email,
+                subject: 'Permohonan Maaf',
+                html: '<h3>Haii ' + anggotanya.nama + ' </h3><p>Maaf yah Kamu belum bisa masuk nih ke website perpustakaan online, mungkin lain kali, Tetep Semangat yaa!!</p>'
+            };
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
                 }
             });
 
