@@ -91,6 +91,30 @@ router.post('/ebook/update/:id', (req, res) => {
 
 });
 
+
+//download
+router.get('/ebook/download/:id', (req, res) => {
+    if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+         
+        Ebook
+     .findByPk(req.params.id)
+     .then((ebook) => {
+        let data = ebook;
+        var filePath = "/../public/ebook/"; // Or format the path using the `id` rest param
+        var fileName = data.file; // file name
+        console.log(fileName); 
+        res.download(__dirname +filePath + fileName, fileName);
+     })
+     .catch((error) => {
+         console.log(error);
+     })
+     }else {
+         res.redirect('/login')
+     }
+ 
+  
+ });
+
 //index
 router.get('/ebook', (req, res) => {
         if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
