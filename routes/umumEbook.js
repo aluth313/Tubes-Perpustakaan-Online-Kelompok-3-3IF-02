@@ -11,7 +11,7 @@ router.get('/ebook', (req, res) => {
     .findAll()
     .then((ebook) => {
         let data = ebook;
-        res.render('sites/umum/master/ebook/ebook', { data: data });
+        res.render('sites/umum/master/ebook/ebook', { loggedin: req.session.loggedin, data: data });
     })
     .catch((error) => {
         console.log(error);
