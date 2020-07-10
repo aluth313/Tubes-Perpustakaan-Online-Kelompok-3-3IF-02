@@ -53,27 +53,34 @@
                         <input type="text" class="form-control" name="tahun" placeholder="Enter ...">
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-7">
                     <!-- text input -->
                     <div class="form-group">
                         <label>File</label>
-                        <input type="file" class="form-control" name="file" placeholder="Enter ...">
+                        <input type="file" class="form-control" name="file">
                     </div>
                 </div>
-            <div class="col-sm-7">
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="col-sm-7">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Cover</label>
+                        <input type="file" class="form-control" name="cover">
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
                 </div>
             </div>
+            <!-- <div class="row"> -->
 
-        </form>
+            </form>
+        </div>
+
+        <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
+    <!-- import data footer -->
 
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<!-- import data footer -->
-
-<%- include ('../../../../partials/admin/footer') -%>
+    <%- include ('../../../../partials/admin/footer') -%>
