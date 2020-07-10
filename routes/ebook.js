@@ -78,30 +78,40 @@ router.post('/ebook/update/:id', (req, res) => {
         if (req.files) {
             let file = req.files.file;
             let filename = file.name;
+            let cover = req.files.cover;
+            let filenameCover = cover.name;
             file.mv('./public/ebook/' + filename, function (err) {
                 if (err) {
                     res.send(err)
                 } else {    
                     console.log(filename);
-                    Ebook
-                    .update({
-                        judul: req.body.judul,
-                        penerbit: req.body.penerbit,
-                        pengarang: req.body.pengarang,
-                        tahun: req.body.tahun,
-                        file: filename,
-                    }, {
-                        where: {
-                            id: req.params.id
-                        }
-                    })
-                    .then((ebook) => {
-                        res.redirect('/admin/ebook');
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
                 }
+            })
+            cover.mv('./public/ebook/cover/' + filenameCover, function (err) {
+                if (err) {
+                    res.send(err)
+                } else {
+                    console.log(filenameCover);
+                }
+            })
+            Ebook
+            .update({
+                judul: req.body.judul,
+                penerbit: req.body.penerbit,
+                pengarang: req.body.pengarang,
+                tahun: req.body.tahun,
+                file: filename,
+                cover: filenameCover
+            }, {
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then((ebook) => {
+                res.redirect('/admin/ebook');
+            })
+            .catch((error) => {
+                console.log(error);
             })
         } else {
             Ebook

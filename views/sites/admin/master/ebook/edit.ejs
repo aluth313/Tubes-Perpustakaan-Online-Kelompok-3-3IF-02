@@ -23,7 +23,7 @@
     </section>
     <!-- Main content -->
     <div class="card-body">
-        <form role="form" action="/admin/ebook/update/<%= data.id %>" method="POST">
+        <form role="form" action="/admin/ebook/update/<%= data.id %>" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-sm-7">
                     <!-- text input -->
@@ -62,18 +62,21 @@
                         <input type="file" class="form-control" name="file">
                     </div>
                 </div>
-
-
-            
-            <div class="col-sm-7">
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="col-sm-7">
+                    <!-- textarea -->
+                    <div class="form-group">
+                        <label>Cover</label>
+                        <input type="file" class="form-control" name="cover">
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
                 </div>
             </div>
-
         </form>
     </div>
-
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
