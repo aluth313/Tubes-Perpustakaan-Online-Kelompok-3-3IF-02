@@ -54,8 +54,18 @@ const umumBuku = require('./routes/umumBuku');
 const umumEbook = require('./routes/umumEbook');
 
 app.get("/", function (request, response) {
-	response.render('sites/index',{loggedin: request.session.loggedin});
+	Buku
+	.findAll({limit: 6})
+	.then((buku) => {
+		let data = buku;
+		console.log(data);
+		response.render('sites/index',{loggedin: request.session.loggedin, data: data});
+	})
+	.catch((error) => {
+		console.log(error);
+	})	
 });
+
 
 app.get("/login", function (request, response) {
 	response.render('sites/login');
@@ -214,6 +224,8 @@ app.get('/admin/dashboard', function (req, res) {
 	});
 
 });
+
+
 app.use('/admin', anggotaRoutes);
 app.use('/admin', bukuRoutes);
 app.use('/admin', peminjamanRoutes);

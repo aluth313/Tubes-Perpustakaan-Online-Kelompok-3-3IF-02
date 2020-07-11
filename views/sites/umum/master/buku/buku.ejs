@@ -27,14 +27,14 @@
                         <% if (buku) { %>
                         <% buku.forEach((data) => { %>
                         <tr>
-                            <th><%= no++ %></th>
-                            <th style="text-align: center;"><img src="/buku/<%= data.cover %>" width="180" height="200" alt="tidak ada gambar"></th>
-                            <th><%= data.judul %></th>
-                            <th><%= data.pengarang %></th>
-                            <th>
+                            <td><%= no++ %></td>
+                            <td style="text-align: center;"><img src="/buku/<%= data.cover %>" width="180" height="200" alt="tidak ada gambar"></td>
+                            <td><%= data.judul %></td>
+                            <td><%= data.pengarang %></td>
+                            <td>
                                 <a href="/pinjam/tgl-kembali/<%= data.id %>" class="btn btn-info">Pinjam</a>
                                 <!-- <a href="/pinjam/<%= data.id %>" class="btn btn-info">Pinjam</a> -->
-                            </th>
+                            </td>
                         </tr>
                         <% }) %>
                         <% } %>
