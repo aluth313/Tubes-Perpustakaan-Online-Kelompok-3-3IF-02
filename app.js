@@ -114,7 +114,7 @@ app.post("/pinjam/:id", async function (req, res) {
 				console.log('Email sent: ' + info.response);
 			}
 		});
-		res.render('sites/umum/master/buku/success')
+		res.render('sites/umum/master/buku/success', {loggedin: req.session.loggedin})
 	} else {
 		res.redirect('/login')
 	}
@@ -124,7 +124,7 @@ app.get("/pinjam/tgl-kembali/:id", async function (req, res) {
 	if (req.session.loggedin == true) {
 		Buku.findByPk(req.params.id)
 		.then((buku) => {
-			res.render('sites/umum/master/buku/pinjam', {buku: buku})
+			res.render('sites/umum/master/buku/pinjam', {loggedin: req.session.loggedin, buku: buku})
 		})
 	} else {
 		res.redirect('/login')

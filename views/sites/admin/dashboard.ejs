@@ -115,3 +115,13 @@
 
 
 <%- include ('../../partials/admin/footer') -%>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $("#tabelVerifikasi").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+    });
+      $('#dashboard').addClass("active");
+  })
+</script>
