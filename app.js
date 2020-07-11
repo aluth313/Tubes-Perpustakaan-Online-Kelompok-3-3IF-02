@@ -58,7 +58,6 @@ app.get("/", function (request, response) {
 	.findAll({limit: 6})
 	.then((buku) => {
 		let data = buku;
-		console.log(data);
 		response.render('sites/index',{loggedin: request.session.loggedin, data: data});
 	})
 	.catch((error) => {
