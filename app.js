@@ -8,6 +8,7 @@ const Anggota1 = models.Anggota;
 const User1 = models.User;
 const Peminjaman = models.Peminjaman;
 const Buku = models.Buku;
+const Ebook = models.Ebook;
 const session = require('express-session');
 const upload = require('express-fileupload');
 const nodemailer = require('nodemailer');
@@ -43,7 +44,6 @@ const bukuRoutes = require('./routes/buku');
 const peminjamanRoutes = require('./routes/peminjaman');
 // const Buku = require('./models/buku');
 // const Peminjaman = require('./models/peminjaman');
-const Ebook = require('./models/ebook');
 const User = require('./models/User');
 const ebookRoutes = require('./routes/ebook');
 
@@ -53,16 +53,18 @@ const userPeminjamanRoutes = require('./routes/userPeminjaman');
 const umumBuku = require('./routes/umumBuku');
 const umumEbook = require('./routes/umumEbook');
 
-app.get("/", function (request, response) {
-	Buku
-	.findAll({limit: 6})
-	.then((buku) => {
-		let data = buku;
-		response.render('sites/index',{loggedin: request.session.loggedin, data: data});
-	})
-	.catch((error) => {
-		console.log(error);
-	})	
+app.get("/", async function (request, response) {
+	let buku = await Buku.findAll({order: [
+		['createdAt','DESC'],
+		],
+		limit: 6});
+	let ebook = await Ebook.findAll({order: [
+		['createdAt','DESC'],
+		],
+		limit: 6});
+	console.log(buku);
+	response.render('sites/index',{loggedin: request.session.loggedin, buku:buku, ebook:ebook});
+
 });
 
 

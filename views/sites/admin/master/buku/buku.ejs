@@ -82,9 +82,16 @@
 <!-- import data footer -->
 
 <%- include ('../../../../partials/admin/footer') -%>
-<script type="text/javascript">
-    $(document).ready(function () {
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#tabelVerifikasi").DataTable({
+          "responsive": true,
+          "autoWidth": false,
+      });
+        $('#master').addClass("menu-open");
+        $('#buku').addClass("active");
+        $('#masterHref').addClass("active");
     })
 </script>
 </body>

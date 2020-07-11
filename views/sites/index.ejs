@@ -67,8 +67,8 @@
 
         <center>
             <div class="row">
-                <% if(data) { %>
-                <% data.forEach((datbuk) => { %>
+                <% if(buku) { %>
+                <% buku.forEach((datbuk) => { %>
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
                         <p class="portfolio-link" data-toggle="" href="">
@@ -104,13 +104,13 @@
 
         <center>
             <div class="row">
-                <% if(data) { %>
-                <% data.forEach((datbuk) => { %>
+                <% if(ebook) { %>
+                <% ebook.forEach((datbuk) => { %>
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
                         <p class="portfolio-link" data-toggle="" href="">
 
-                            <img src="/buku/<%= datbuk.cover %>" width="180" height="200"
+                            <img src="/ebook/cover/<%= datbuk.cover %>" width="180" height="200"
                             alt="tidak ada gambar">
                         </p>
                         <div class="portfolio-caption">
