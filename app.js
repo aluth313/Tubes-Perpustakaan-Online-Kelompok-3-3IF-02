@@ -9,6 +9,7 @@ const User1 = models.User;
 const Peminjaman = models.Peminjaman;
 const Buku = models.Buku;
 const Ebook = models.Ebook;
+const Anggota = models.Anggota;
 const session = require('express-session');
 const upload = require('express-fileupload');
 const nodemailer = require('nodemailer');
@@ -38,7 +39,6 @@ app.use(upload());
 //   next();
 // });
 
-const Anggota = require('./models/Anggota');
 const anggotaRoutes = require('./routes/anggota');
 const bukuRoutes = require('./routes/buku');
 const peminjamanRoutes = require('./routes/peminjaman');
@@ -210,20 +210,38 @@ app.post("/daftar", function (req, res) {
 });
 
 
-app.get('/admin/dashboard', function (req, res) {
-	var buku = 20;
-	var ebook = 25;
-	var anggota = 30;
-	var peminjaman = 35;
+app.get("/", async function (request, response) {
+	let buku = await Buku.findAll({order: [
+		['createdAt','DESC'],
+		],
+		limit: 6});
+	let ebook = await Ebook.findAll({order: [
+		['createdAt','DESC'],
+		],
+		limit: 6});
+	console.log(buku);
+	response.render('sites/index',{loggedin: request.session.loggedin, buku:buku, ebook:ebook});
+
+});
+
+app.get('/admin/dashboard', async function (req, res) {
+	if (typeof req.session.nama !== 'undefined' || typeof req.session.loggedin !== 'undefined') {
+    
+	let buku = await Buku.count();
+	let ebook = await Ebook.count();
+	let anggota = await Anggota.count();
+	let peminjaman = await Peminjaman.count();
 
 	res.render('sites/admin/dashboard', {
-
-		buku: buku,
-		ebook: ebook,
-		anggota: anggota,
-		peminjaman: peminjaman
+	buku: buku,
+	ebook: ebook,
+	anggota: anggota,
+	peminjaman: peminjaman
 	});
 
+} else {
+	res.redirect('/login')
+}
 });
 
 
