@@ -27,42 +27,7 @@
   <section class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-info">
-            <div class="inner">
-              <!-- mencetak data yang dikirim app.js -->
-              <h3><%= buku %></h3>
 
-              <p>Total Buku</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-ios-book"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas faarrow-circle-right"></i></a>
-
-
-
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-success">
-            <div class="inner">
-              <!-- mencetak data yang dikirim app.js -->
-              <h3><%= ebook %></h3>
-              <p>Total Ebook</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-usb"></i>
-            </div>
-
-            <a href="#" class="small-box-footer">More info <i class="fas faarrow-circle-right"></i></a>
-
-
-          </div>
-        </div>
         <!-- ./col -->
         <div class="col-lg-3 col-6">
           <!-- small box -->
@@ -77,10 +42,48 @@
               <i class="ion ion-person"></i>
             </div>
 
-            <a href="#" class="small-box-footer">More info <i class="fas faarrow-circle-right"></i></a>
+            <a href="/admin/anggota" class="small-box-footer">Info Selengkapnya <i class="fas faarrow-circle-right"></i></a>
 
           </div>
         </div>
+
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-success">
+            <div class="inner">
+              <!-- mencetak data yang dikirim app.js -->
+              <h3><%= buku %></h3>
+
+              <p>Total Buku</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-book"></i>
+            </div>
+            <a href="/admin/buku" class="small-box-footer">Info Selengkapnya <i class="fas faarrow-circle-right"></i></a>
+
+
+
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-info">
+            <div class="inner">
+              <!-- mencetak data yang dikirim app.js -->
+              <h3><%= ebook %></h3>
+              <p>Total Ebook</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-book"></i>
+            </div>
+
+            <a href="/admin/ebook" class="small-box-footer">Info Selengkapnya <i class="fas faarrow-circle-right"></i></a>
+
+
+          </div>
+        </div>
+
         <!-- ./col -->
         <div class="col-lg-3 col-6">
           <!-- small box -->
@@ -93,10 +96,10 @@
 
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="ion ion-document"></i>
             </div>
 
-            <a href="#" class="small-box-footer">More info <i class="fas faarrow-circle-right"></i></a>
+            <a href="/admin/peminjaman" class="small-box-footer">Info Selengkapnya <i class="fas faarrow-circle-right"></i></a>
 
           </div>
         </div>

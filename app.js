@@ -227,7 +227,9 @@ app.get('/admin/dashboard', async function (req, res) {
 	let buku = await Buku.count();
 	let ebook = await Ebook.count();
 	let anggota = await Anggota.count();
-	let peminjaman = await Peminjaman.count();
+	let peminjaman = await Peminjaman.count({where: {
+		status: "dipinjam"
+	}});
 
 	res.render('sites/admin/dashboard', {
 	buku: buku,
