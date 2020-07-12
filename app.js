@@ -145,14 +145,14 @@ app.post("/login", async function(req, res) {
 			}
 		})
 		if (userLogin.role == 'admin') {
-			req.session.loggedin = true;
+			req.session.loggedin = userLogin.role;
 			req.session.nama = anggotaLogin.nama;
 			req.session.userId = userLogin.id;
 			req.session.anggotaId = anggotaLogin.id;
 			res.redirect('/admin/dashboard')
 		} else {
 			if (anggotaLogin.status == 1) {
-				req.session.loggedin = true;
+				req.session.loggedin = userLogin.role;
 				req.session.nama = anggotaLogin.nama;
 				req.session.userId = userLogin.id;
 				req.session.anggotaId = anggotaLogin.id;

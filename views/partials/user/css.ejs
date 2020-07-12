@@ -22,8 +22,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ml-auto">
-                    <% if (typeof loggedin !== 'undefined') { %>
+                    <% if (typeof loggedin !== 'undefined' && loggedin == 'anggota') { %>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/user/profile">Dashboard</a></li>
+                    <% } else { %>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/admin/dashboard">Dashboard</a></li>
                     <% } %>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/umum/ebook">Ebook Terbaru</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/umum/buku">Buku Terbaru</a></li>
