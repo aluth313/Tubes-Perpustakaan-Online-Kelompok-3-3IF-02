@@ -36,7 +36,7 @@
             <ul class="navbar-nav text-uppercase ml-auto">
                 <% if (typeof loggedin !== 'undefined' && loggedin == 'anggota') { %>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/user/profile">Dashboard</a></li>
-                <% } else { %>
+                <% } else if (typeof loggedin !== 'undefined' && loggedin == 'admin') { %>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/admin/dashboard">Dashboard</a></li>
                 <% } %>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#ebook">Ebook Terbaru</a></li>
