@@ -80,7 +80,7 @@ app.get("/logout", function (request, response) {
 });
 
 app.post("/pinjam/:id", async function (req, res) {
-	if (req.session.loggedin == true) {
+	if (typeof req.session.loggedin !== 'undefined') {
 		let today = new Date();
 		let tglPinjam = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 		let tglKembali = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()+1);
