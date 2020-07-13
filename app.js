@@ -65,7 +65,6 @@ app.get("/", async function (request, response) {
 		['createdAt','DESC'],
 		],
 		limit: 6});
-	console.log(buku);
 	response.render('sites/index',{loggedin: request.session.loggedin, buku:buku, ebook:ebook});
 
 });
@@ -76,7 +75,6 @@ app.get("/login", function (request, response) {
 });
 
 app.get("/logout", function (request, response) {
-	console.log(request.session.nama)
 	request.session.destroy();
 	response.redirect('/login')
 });
@@ -222,7 +220,6 @@ app.get("/", async function (request, response) {
 		['createdAt','DESC'],
 		],
 		limit: 6});
-	console.log(buku);
 	response.render('sites/index',{loggedin: request.session.loggedin, buku:buku, ebook:ebook});
 
 });
