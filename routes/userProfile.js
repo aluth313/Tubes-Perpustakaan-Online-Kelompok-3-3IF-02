@@ -7,7 +7,10 @@ const upload = require('express-fileupload');
 
 //index
 router.get('/profile', (req, res) => {
-        res.render('sites/user/master/profile/profile');
-   });
+	Anggota.findByPk(req.session.anggotaId, {include: ['user']})
+	.then((anggota) => {
+		res.render('sites/user/master/profile/profile', {anggota: anggota});
+	})
+});
 
 module.exports = router
