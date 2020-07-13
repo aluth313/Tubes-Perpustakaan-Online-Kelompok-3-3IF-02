@@ -122,7 +122,7 @@ app.post("/pinjam/:id", async function (req, res) {
 });
 
 app.get("/pinjam/tgl-kembali/:id", async function (req, res) {
-	if (req.session.loggedin == true) {
+	if (typeof req.session.loggedin !== 'undefined') {
 		Buku.findByPk(req.params.id)
 		.then((buku) => {
 			res.render('sites/umum/master/buku/pinjam', {loggedin: req.session.loggedin, buku: buku})
