@@ -22,13 +22,43 @@
     </section>
     <!-- Main content -->
     <div class="card">
-       
-        <!-- /.card-header -->
-        <!-- <div class="container">
-            <div class="col-sm-12">
-            </div>
-        </div> -->
-     
+        <table>
+            <tr>
+                <td style="padding-left: 10px">NIK</td>
+                <td>:</td>
+                <td><%= anggota.nik %></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px">Nama</td>
+                <td>:</td>
+                <td><%= anggota.nama %></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px">Alamat</td>
+                <td>:</td>
+                <td><%= anggota.alamat %></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px">Jenis Kelamin</td>
+                <td>:</td>
+                <td><%= anggota.jk %></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px">Kota Lahir</td>
+                <td>:</td>
+                <td><%= anggota.kota_lahir %></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px">Tanggal Lahir</td>
+                <td>:</td>
+                <td><%= anggota.tgl_lahir %></td>
+            </tr>
+            <tr>
+                <td style="padding-left: 10px">Email</td>
+                <td>:</td>
+                <td><%= anggota.user.email %></td>
+            </tr>
+        </table>
     </div>
     <!-- /.content -->
 </div>
@@ -36,3 +66,8 @@
 <!-- /.content-wrapper -->
 <!-- import data footer -->
 <%- include ('../../../../partials/user/footer') -%>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#profile').addClass('active')
+    })
+</script>
