@@ -19,6 +19,9 @@ const transporter = nodemailer.createTransport({
 	auth: {
 		user: 'filmdownload769@gmail.com',
 		pass: 'Persinas313.'
+	},
+	tls: {
+		rejectUnauthorized: false
 	}
 });
 
