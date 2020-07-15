@@ -175,7 +175,7 @@ app.post("/daftar", function (req, res) {
 	User1.create({
 		email: req.body.email,
 		password: req.body.password,
-		role: 'Anggota'
+		role: 'anggota'
 	})
 	.then((user) => {
 		let data = {

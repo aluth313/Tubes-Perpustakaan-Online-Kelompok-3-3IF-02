@@ -3,7 +3,18 @@ const router = express.Router();
 const models = require('../models');
 const Peminjaman = models.Peminjaman;
 const Buku = models.Buku;
+const Anggota = models.Anggota;
+const User = models.User;
 const { Op } = require("sequelize");
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'filmdownload769@gmail.com',
+        pass: 'Persinas313.'
+    }
+});
 
 router.get('/peminjaman', async (req, res) => {
     if (typeof req.session.loggedin !== 'undefined') {
@@ -29,15 +40,32 @@ router.get('/peminjaman', async (req, res) => {
 });
 
 //terima
-router.post('/peminjaman/terima/:id', (req, res) => {
+router.post('/peminjaman/terima/:id', async (req, res) => {
     if (typeof req.session.loggedin !== 'undefined') {
-        Peminjaman.findByPk(req.params.id)
+        let anggota_id = await Peminjaman.findByPk(req.params.id, {include: ['anggota']});
+        let email_user = await User.findByPk(anggota_id.anggota.userId);
+        
+        Peminjaman.findByPk(req.params.id, {include: ['anggota']})
         .then((peminjaman) => {
             Peminjaman.update({
                 status: 'dipinjam'
             }, {
                 where: {
                     id: peminjaman.id
+                }
+            });
+
+            const mailOptions = {
+                from: 'filmdownload769@gmail.com',
+                to: email_user.email,
+                subject: 'Peminjaman telah dikonfirmasi',
+                html: '<h3>Haii ' + peminjaman.anggota.nama + ' </h3><p>Kamu sekarang udah minjam buku, jangan lupa kembalikan lagi yaa sesuai tanggal kembalinya :)</p>'
+            };
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
                 }
             });
             res.redirect('/admin/peminjaman')
@@ -50,8 +78,9 @@ router.post('/peminjaman/terima/:id', (req, res) => {
 //tolak
 router.get('/peminjaman/tolak/:id', async (req, res) => {
     if (typeof req.session.loggedin !== 'undefined') {
-        let peminjaman = await Peminjaman.findByPk(req.params.id);
-        Buku.findByPk(peminjaman.buku_id)
+        let anggota_id = await Peminjaman.findByPk(req.params.id, {include: ['anggota']});
+        let email_user = await User.findByPk(anggota_id.anggota.userId);
+        Buku.findByPk(anggota_id.buku_id)
         .then((buku) => {
             Buku.update({
                 jumlah: (buku.jumlah + 1)
@@ -66,6 +95,19 @@ router.get('/peminjaman/tolak/:id', async (req, res) => {
                 id: req.params.id
             }
         })
+        const mailOptions = {
+            from: 'filmdownload769@gmail.com',
+            to: email_user.email,
+            subject: 'Peminjaman ditolak',
+            html: '<h3>Haii ' + anggota_id.anggota.nama + ' </h3><p>Maaf yah, untuk saat ini kamu belum bisa pinjam buku, mungkin lain kali :)</p>'
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
         res.redirect('/admin/peminjaman')
     } else {
         res.redirect('/login')

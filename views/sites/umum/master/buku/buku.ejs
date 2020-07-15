@@ -32,8 +32,11 @@
                             <td><%= data.judul %></td>
                             <td><%= data.pengarang %></td>
                             <td>
+                                <% if (data.jumlah > 0) { %>
                                 <a href="/pinjam/tgl-kembali/<%= data.id %>" class="btn btn-info">Pinjam</a>
-                                <!-- <a href="/pinjam/<%= data.id %>" class="btn btn-info">Pinjam</a> -->
+                                <% } else { %>
+                                <button type="button" title="stok sudah habis" disabled class="btn btn-info">Pinjam</button>
+                                <% } %>
                             </td>
                         </tr>
                         <% }) %>
